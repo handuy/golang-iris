@@ -22,6 +22,11 @@ type GetProductByIdResponse struct {
 	ProductDetail Product 
 }
 
+type GetPostByIdResponse struct {
+	IsFound bool
+	PostDetail Post 
+}
+
 var products = []Product{
 	Product{
 		Id: 1,
@@ -48,9 +53,11 @@ var posts = []Post{
 
 func main() {
 	app := iris.Default()
+
 	app.Get("/products", func(ctx iris.Context){
 		ctx.JSON(products)
 	})
+
 	app.Get("/products/{productID}", func(ctx iris.Context){
 		productId := ctx.Params().Get("productID")
 		productIdInt, _ := strconv.Atoi(productId)
@@ -68,8 +75,20 @@ func main() {
 	app.Get("/posts", func(ctx iris.Context){
 		ctx.JSON(posts)
 	})
-	app.Get("/posts", func(ctx iris.Context){
-		ctx.JSON(posts)
+
+	app.Get("/posts/{postID}", func(ctx iris.Context){
+		postId := ctx.Params().Get("postID")
+		postIdInt, _ := strconv.Atoi(postId)
+
+		var response GetPostByIdResponse
+		for _, item := range posts {
+			if postIdInt == item.Id {
+				response.IsFound = true
+				response.PostDetail = item
+			}
+		}
+
+		ctx.JSON(response)
 	})
 	app.Listen(":8080")
 }
