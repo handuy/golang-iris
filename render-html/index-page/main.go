@@ -8,7 +8,7 @@ func main() {
 	app.RegisterView(tmpl)
 
 	app.Get("/", func(ctx iris.Context){
-		ctx.View("")
+		ctx.View("home-page/index.html")
 	})
 
 	app.Listen(":8080")
