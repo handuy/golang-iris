@@ -2,6 +2,12 @@ package main
 
 import "github.com/kataras/iris/v12"
 
+type Author struct {
+	ID string
+	Name string
+	Description string
+}
+
 type Product struct {
 	ID string
 	Img  string
@@ -12,9 +18,12 @@ type Product struct {
 }
 
 type News struct {
+	ID string
 	Img string
 	Title string
 	Description string
+	Content string
+	Author Author
 	Date string
 }
 
@@ -100,6 +109,74 @@ var products = []Product{
 	},
 }
 
+var newsList = []News{
+	News{
+		ID: "1",
+		Img: "/resources/image/news/news-1-thumnails.jpg",
+		Title: "Pack “Logo Sketch” với branding mộc mạc trên Air Max 97 và Air Max Plus",
+		Description: "Trong pack này, chúng ta sẽ đến với mẫu branding kiểu phác thảo, đầy mộc mạc và “blend” hoàn hảo cùng tổng thể phối màu.",
+		Content: "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old",
+		Author: Author{
+			ID: "1",
+			Name: "Mourinho",
+			Description: "Spurs manager",
+		},
+		Date: "20/1/2020",
+	},
+	News{
+		ID: "2",
+		Img: "/resources/image/news/news-2-thumnails.jpg",
+		Title: "Nike Classic Cortez – Phối Màu Của Sự Tinh Tế",
+		Description: "Phối màu tiếp theo gia nhập bộ sưu tập Nike Classic Cortez với sự kết hợp của 2 tông màu: Hồng Hoa Đăng và màu Cam",
+		Content: "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old",
+		Author: Author{
+			ID: "2",
+			Name: "Klopp",
+			Description: "Liverpool manager",
+		},
+		Date: "20/1/2020",
+	},
+	News{
+		ID: "3",
+		Img: "/resources/image/news/news-3-thumnails.jpg",
+		Title: "Air Jordan 1 “Satin Black Toe” xuất hiện hình ảnh chi tiết",
+		Description: "Air Jordan 1 “Black Toe” vẫn luôn là thiết kế Air Jordan 1 đáng mua nhất mọi thời đại. Vậy sẽ thế nào nếu chúng khoác lên mình chất liệu satin?",
+		Content: "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old",
+		Author: Author{
+			ID: "3",
+			Name: "Ole",
+			Description: "Utd manager",
+		},
+		Date: "20/1/2020",
+	},
+	News{
+		ID: "4",
+		Img: "/resources/image/news/news-4-thumnails.jpg",
+		Title: "HOT! Nike và Levi’s tái hợp với hàng loạt siêu phẩm mới",
+		Description: "Đến hẹn lại lên, Nike và Levi’s lại tái hợp với nhau khiến các sneakerheads và tín đồ thời trang mê mệt.",
+		Content: "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old",
+		Author: Author{
+			ID: "4",
+			Name: "Lampard",
+			Description: "Chelsea manager",
+		},
+		Date: "20/1/2020",
+	},
+	News{
+		ID: "5",
+		Img: "/resources/image/news/news-5-thumnails.jpg",
+		Title: "Xuất hiện phối màu thứ 3 của Nike Air Force 1 Type N354",
+		Description: "Nike N354 là tên dự án với những thiết kế lấy cảm hứng từ kho Archive khổng lồ của The Swoosh. Nổi bật trong số đó là phiên bản Nike Air Force 1 Type.",
+		Content: "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old",
+		Author: Author{
+			ID: "5",
+			Name: "Pep",
+			Description: "City manager",
+		},
+		Date: "20/1/2020",
+	},
+}
+
 func main() {
 	app := iris.Default()
 	tmpl := iris.HTML("./view", ".html")
@@ -151,39 +228,6 @@ func main() {
 	})
 
 	app.Get("/news", func(ctx iris.Context){
-		newsList := []News{
-			News{
-				Img: "/resources/image/news/news-1-thumnails.jpg",
-				Title: "Pack “Logo Sketch” với branding mộc mạc trên Air Max 97 và Air Max Plus",
-				Description: "Trong pack này, chúng ta sẽ đến với mẫu branding kiểu phác thảo, đầy mộc mạc và “blend” hoàn hảo cùng tổng thể phối màu.",
-				Date: "20/1/2020",
-			},
-			News{
-				Img: "/resources/image/news/news-2-thumnails.jpg",
-				Title: "Nike Classic Cortez – Phối Màu Của Sự Tinh Tế",
-				Description: "Phối màu tiếp theo gia nhập bộ sưu tập Nike Classic Cortez với sự kết hợp của 2 tông màu: Hồng Hoa Đăng và màu Cam",
-				Date: "20/1/2020",
-			},
-			News{
-				Img: "/resources/image/news/news-3-thumnails.jpg",
-				Title: "Air Jordan 1 “Satin Black Toe” xuất hiện hình ảnh chi tiết",
-				Description: "Air Jordan 1 “Black Toe” vẫn luôn là thiết kế Air Jordan 1 đáng mua nhất mọi thời đại. Vậy sẽ thế nào nếu chúng khoác lên mình chất liệu satin?",
-				Date: "20/1/2020",
-			},
-			News{
-				Img: "/resources/image/news/news-4-thumnails.jpg",
-				Title: "HOT! Nike và Levi’s tái hợp với hàng loạt siêu phẩm mới",
-				Description: "Đến hẹn lại lên, Nike và Levi’s lại tái hợp với nhau khiến các sneakerheads và tín đồ thời trang mê mệt.",
-				Date: "20/1/2020",
-			},
-			News{
-				Img: "/resources/image/news/news-5-thumnails.jpg",
-				Title: "Xuất hiện phối màu thứ 3 của Nike Air Force 1 Type N354",
-				Description: "Nike N354 là tên dự án với những thiết kế lấy cảm hứng từ kho Archive khổng lồ của The Swoosh. Nổi bật trong số đó là phiên bản Nike Air Force 1 Type.",
-				Date: "20/1/2020",
-			},
-		}
-		
 		ctx.ViewData("newsList", newsList)
 		ctx.View("news/news.html")
 	})
@@ -200,6 +244,20 @@ func main() {
 		}
 		
 		ctx.WriteString("Không tìm thấy sản phẩm")
+	})
+
+	app.Get("/news/{id}", func(ctx iris.Context){
+		id := ctx.Params().Get("id")
+
+		for _, item := range newsList {
+			if item.ID == id {
+				ctx.ViewData("news", item)
+				ctx.View("news/detail.html")
+				return
+			}
+		}
+		
+		ctx.WriteString("Không tìm thấy tin tức")
 	})
 
 	app.Listen(":8080")
