@@ -1,0 +1,64 @@
+extends ./common
+
+block customizeCss
+  // Components CSS
+  link(rel='stylesheet' type='text/css' href='./css/components/header.css')
+  link(rel='stylesheet' type='text/css' href='./css/components/buying/shipping-info.css')
+  link(rel="stylesheet" type="text/css" href="./css/components/payment-methods-modal.css")
+
+  // Common CSS
+  link(rel='stylesheet' type='text/css' href='./css/main.css')
+  link(rel='stylesheet' type='text/css' href='./css/except-home-page.css')
+  link(rel='stylesheet' type='text/css' href='./css/used-in-js.css')
+  link(rel='stylesheet' type='text/css' href='./css/account.css')
+  link(rel='stylesheet' type='text/css' href='./css/account-setting.css')
+
+block title
+  title Thông tin tài khoản
+
+block header
+  include ./template-parts/header
+
+block mainContent
+  .main-content-wrapper.container
+    .row
+      .col-lg-3
+        include ./template-parts/left-sidebar-account
+      .col-lg-9.main-content-wrapper
+        .main-content
+          h2.account-title Thông tin thanh toán
+          #pills-tabContent.tab-content                              
+            // payment-methods-setting Section
+            #payment-methods-setting
+              .setting-box
+                .payment-item
+                  .logo-methods
+                    img(src="./image/visa.png", alt="visa" class="img-fluid")
+                  .card-number ********1234
+                  .delete.text-btn(data-toggle="modal" data-target="#confirmDelete") Xoá
+                .break-line
+                .payment-item
+                  .logo-methods
+                    img(src="./image/visa.png", alt="visa" class="img-fluid")
+                  .card-number ********1234
+                  .delete.text-btn(data-toggle="modal" data-target="#confirmDelete") Xoá
+                
+              .btn.btn-primary.red-btn.add-new-payment-btn(data-toggle="modal" data-target="#paymentMethods") + Thêm mới
+  // Modal 
+  include ./template-parts/change-password-modal
+  include ./template-parts/shipping-info
+  include ./template-parts/payment-methods
+  include ./template-parts/confirm-delete-modal
+
+block footer
+  include ./template-parts/footer
+
+block customizeScript
+  // Card
+  script(type="text/javascript" src="./vendor/card/jquery.card.js")
+
+  
+  script(src="./script/except-home-page.js")
+  script(src="./script/address-select.js")
+  script(src="./script/payment-methods.js")
+  script(src="./script/payment-method.page.js")
